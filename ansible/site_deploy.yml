@@ -1,0 +1,22 @@
+---
+- name: SITE Deployment Automation
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Stop any existing containers
+      command: docker-compose down
+      args:
+        chdir: /workspaces/Data-Driven-Log-Processor
+
+    - name: Build and Start Log Processor System
+      command: docker-compose up --build -d
+      args:
+        chdir: /workspaces/Data-Driven-Log-Processor
+
+    - name: Verify Running Containers
+      command: docker ps
+      register: docker_output
+
+    - name: Show Status
+      debug:
+        var: docker_output.stdout_lines
