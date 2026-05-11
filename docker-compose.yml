@@ -26,13 +26,12 @@ services:
   api:
     build: ./api
     ports: ["8000:8000"]
-    depends_on:
-      - kafka
+    depends_on: ["kafka"]
+    restart: always  
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
 
   worker:
     build: ./worker
-    depends_on:
-      - kafka
-      - postgres
+    depends_on: ["kafka", "postgres"]
+    restart: always  
